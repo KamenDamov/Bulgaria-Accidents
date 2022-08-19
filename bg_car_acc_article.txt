@@ -1,0 +1,78 @@
+Title: Discerning Regions With Heightened Car Accident Risks Through Statistical Testing
+
+Introduction 
+Car accidents are extremely destructive for individuals, families, and society as a whole. 
+On the individual front, a car accident can change lives forever, or break families apart. 
+That said, the toll taken on society by car accidents doesn't end here. 
+The World Health Organization (WHO) estimates that car accidents cost countries 3% of their GDP.
+Knowing this, one of the solutions to decrease car crashes is
+targeting specific areas with increased occurences of car crashes.
+This present article will present a data driven, and statistical, 
+solution to efficiently detect areas that are problematic. 
+I decided to do such an analysis on my country of origin, Bulgaria.
+
+The Data
+The Bulgarian government recently released data on multiple sectors and themes for public view, and use.
+Car crashes is one of these sectors. Here's a view of the data (pardon the bulgarian).
+
+The Goal
+We have total occurences, deaths, injuries, for a given region and year (2020 or 2021).
+There is also percentage change and distinct difference.
+At first, you may think that having percentage change and total occurences, injuries or deaths is good enough.
+UNfortunately, these metrics are not robust enough to claim a certain region is a hotspot for accidents.
+To present a thourough and robust analysis, we will want to see if year differences in occurences, injuries, and deaths are statistically significant.
+Here are the steps to complete this project:
+- Explore the data
+- Model the data
+- Carry out the statistical testing
+- Present results
+
+Exploring The Data
+As mentionned above, we have one region per row, with its information (deaths, injuries, occurences, percentage change, and distinct change). 
+Let's see the classic describe and info methods.
+Let's see some basic statistics. 
+First, we want to see top 3 most affected regions in 2020, and 2021. 
+
+Then, we want to see the top 3 regions that have had the most increase and decrease between 2020 and 2021. 
+
+Model The Data
+That's a good start. As the data was in a fairly modified and modeled, we were able to easily extract basic statistics.
+That said, in order to carry out significance testing we will need to change the shape of our dataframe. 
+We want to pivot the data on the years. In other words, we want to create a Year column which will have 2020 or 2021 for values. 
+Here's how we do it. 
+- Create 2 arrays containing respectively the 2020 and 2021 columns
+- Concatenate these two arrays containing the columns into a df
+- Create Year column
+- Keep only the columns needed (Occurences, Deaths, Injuries, Region, and Year)
+- Clean the NaN values and rename the columns
+
+Now let's create a new feature, the severity ratio. This will be computed by dividing deaths and injuries, to occurences as so: 
+(deaths + injuries)/occurences. 
+This will give us information on the number of people affected per occurence. 
+
+Statistical Testing
+Our data has the right shape to do statistical testing.
+The logic behind statistical testing is to test a difference between two groups, to the means of randomly created groups.
+We will test differences between 2020 and 2021 for a given region with occurences, deaths, injuries, and severity ratio. 
+Here are the steps: 
+- Determine a test statistic. In our case the test statistic is the difference between 2020 and 2021 for a given region.
+- Randomly create two arrays with the 2020 and 2021 data for all regions and compute the mean difference of these two arrays. Repeat this operation 1000 times. 
+- Compare our test statistic to the 1000 randomly created mean differences. 
+- Create our p-value by calulating percentage of values greater than the mean difference
+- See if our p-value is above a certain significance coefficient (0.05, 0.01, 0.001, etc...). If it is above a certain coefficient, our difference is not statistically significant.
+
+Presenting the results
+We now have 4 arrays with each regions that have a significant difference between 2020 and 2021. 
+First, let's create the tooltip of our visual which will include three stars if the difference is significant, the percentage change, and distinct change. 
+Now, add the tooltip to the visual.
+
+And voila! Our visuals are done. 
+
+Let's create a csv version of the dataframe, conditionally format the sheet to have a view of the affected regions in a sheet format. 
+Here's the result after formatting. 
+
+As we can see, the deaths have mostly significantly increased, with some decreases. This is fairly alarming as the occurences have not significantly increased. 
+This means that once an accident occurs, it is more often fatal, and severe.  
+The injuries have increased significantly for only two of the 30 regions. 
+
+    
