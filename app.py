@@ -57,17 +57,6 @@ fig2 = go.Figure(
 ])
 fig2.update_layout(barmode='group',  title = 'Year differences - with statistical significance (p < 0.05)')
 fig2.update_traces(texttemplate = texts, hovertext=['Total death difference', 'Percentage death difference'])
-'''
-fig2 = px.bar(for_bar,\
-     x='Region',\
-     y='Deaths',\
-     color = 'Year',\
-     #barmode = 'group',\
-    #hover_data=['Total death difference', 'Percentage death difference'],
-    title = 'Year differences for deaths - with statistical significance (p < 0.05)')
-fig2.update_layout(barmode='group')
-fig2.update_traces(texttemplate = texts)
-'''
 
 app = dash.Dash(__name__)
 server = app.server
@@ -114,7 +103,7 @@ app.layout = html.Div(
                     options = [
                         {'label': Category, 'value': Category}
                       for Category in ['Occurrences', 'Deaths', 'Injuries']
-                    ], #'Year' is the filter
+                    ], #'Category' is the filter
                     value = "Occurrences",
                     className = 'dropdown', 
                     style={'fontSize': "20px",
@@ -208,9 +197,6 @@ def update_charts(Category):
     fig2.update_traces(texttemplate = texts)
 
     return fig, fig2
-
-
-
 
 #Running dashboard
 if __name__ == '__main__':
